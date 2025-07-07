@@ -1,0 +1,196 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
+%
+\documentclass[conference]{IEEEtran}
+%
+\usepackage{graphicx}
+
+\usepackage{booktabs} % For formal tables
+\usepackage{graphicx}
+\usepackage{ amssymb }
+\usepackage{todonotes}
+%\usepackage{ amssymb }
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{float}
+\usepackage{proof}
+\usepackage{cite}
+\usepackage{subcaption}
+\usepackage{verbatim}
+\usepackage[utf8]{inputenc}
+\usepackage{ mathrsfs }
+\usepackage{algorithm2e}
+\usepackage{amsthm}
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+% \renewcommand\UrlFont{\color{blue}\rmfamily}
+
+\newcommand{\mtlsk}{MTLSK\xspace}
+\newcommand{\nfml}{N}
+
+\newcommand{\zero}{\textbf{0}}
+\newcommand{\compose}{Compose}
+\newcommand{\always}{G}
+\newcommand{\future}{F}
+\newcommand{\once}{O}
+\newcommand{\discr}{\mathcal{D}}
+\newcommand{\repl}{\mathcal{R}epl}
+\newcommand{\trigger}{T}
+\newcommand{\historically}{H}
+\newcommand{\nxt}{X}
+\newcommand{\wy}{\tilde{\yesterday}}
+\newcommand{\yesterday}{Y}
+\newcommand{\ita}{ITS}
+\newcommand{\St}{\pr^{-1}}
+\newcommand{\Ss}{S}
+\newcommand{\Loc}{\V_{O \cup H}}
+\newcommand{\struct}{M}
+\newcommand{\st}{\neg run}
+\newcommand{\run}{run}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\ltlmM}{LTL-min-max}
+
+\newcommand{\realsp}{\ensuremath{\mathbb{R}^+_0}}
+\newcommand{\reals}{\ensuremath{\mathbb{R}}}
+\newcommand{\rationals}{\ensuremath{\mathbb{Q}}}
+\newcommand{\naturals}{\ensuremath{\mathbb{N}}}
+\newcommand{\trace}{\ensuremath{\pi}}
+\newcommand{\dtrace}{\ensuremath{\mu}}
+\newcommand{\intseq}{\ensuremath{\overline{I}}}
+\newcommand{\mktuple}[1]{\ensuremath{\langle #1 \rangle}}
+\newcommand{\prop}{\ensuremath{AP}}
+\newcommand{\floor}[1]{\ensuremath{\lfloor #1\rfloor}}
+\newcommand{\ceil}[1]{\ensuremath{\lceil #1\rceil}}
+\newcommand{\half}{\ensuremath{\frac{1}{2}}}
+\newcommand{\pred}{\textit{pred}}
+
+\newcommand{\Inv}{Inv}
+\newcommand{\unt}{U}
+\newcommand{\since}{S}
+\newcommand{\munt}[2]{{\unt_{#2}^{#1}}}
+\newcommand{\funt}[2]{\overline{\unt}_{#2}^{#1}}
+\newcommand{\msince}[2]{{\since_{#2}^{#1}}}
+\newcommand{\fsince}[2]{\overline{\since}_{#2}^{#1}}
+
+\newcommand{\tunt}[1]{\tilde{\unt}_{#1}}
+\newcommand{\mtol}{\Upsilon}
+\newcommand{\tsince}[1]{\tilde{\since}_{#1}}
+\newcommand{\rel}{\mathcal{R}}
+\newcommand{\wnxt}{\tilde{\nxt}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\shared}{Shared}
+\newcommand{\Pp}{\M}
+\newcommand{\I}{\mathcal{I}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\Mi}{\M^I}
+\newcommand{\Mo}{\M^O}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\La}{\mathcal{L}}
+\newcommand{\atn}{@\tilde{F}}
+\newcommand{\atl}{@\tilde{P}}
+\newcommand{\fcond}{\psi_{cond}}
+\newcommand{\Fcond}{\Psi_{cond}}
+\newcommand{\Comp}{\Pp}
+\newcommand{\hapbef}{\leadsto}
+
+\newcommand{\Rm}{\R_{\A}}
+\newcommand{\Rf}{\R^{*}}
+\newcommand{\Rd}{\R^{\theta}}
+\newcommand{\pr}{Pr}
+\newcommand{\map}{map}
+\newcommand{\oldrewr}{output-only}
+\newcommand{\Oldrewr}{Output-only}
+\newcommand{\stwatch}{Stop-Watch}
+\newtheorem{thm}{Lemma}
+\newtheorem{ifr}{Inference}
+\newtheorem{crl}{Corollary}
+% required by IEEEtran:
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{patterns}
+\usetikzlibrary{decorations.pathreplacing,calligraphy}
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=3em, text centered, rounded corners, minimum height=1em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=1cm,
+    minimum height=1em]
+
+\begin{document}
+
+\title{Metric Temporal Logic\\ with
+  Resettable Skewed Clocks (proofs)}
+
+\author{\IEEEauthorblockN{Anonymous authors}
+\IEEEauthorblockA{\textit{Anonymous institutions}}
+}
+%\author{Alberto Bombardelli\inst{1}\orcidID{0000-0003-3385-3205}
+%\and\\ Stefano Tonetta\inst{1}\orcidID{0000-0001-9091-7899}}
+%
+%\authorrunning{A. Bombardelli et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+%\institute{Anonymous institutions}
+%% \institute{Fondazione Bruno Kessler, Via Sommarive, 18, 38123 Povo TN\\
+%% \email{\{abombardelli,tonettas\}@fbk.eu}
+%% }
+%\url{http://www.springer.com/gp/computer-science/lncs} \and
+%ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
+%\email{\{abc,lncs\}@uni-heidelberg.de}}
+%
+\maketitle              % typeset the header of the contribution
+%
+
+
+\begin{abstract}
+  The formal verification of distributed real-time systems is
+  particularly challenging due to the intertwining of timing
+  constraints and synchronization and communication
+  mechanisms. Real-time properties are usually expressed in Metric
+  Temporal Logic (MTL), an extension of Linear-time Temporal Logic
+  (LTL) with metric constraints over time. One of the issues to apply
+  these methods to distributed systems is that clocks are not
+  perfectly synchronized and the local properties may refer to
+  different, possibly skewed, clocks, which are reset for
+  synchronization. Local components and properties, therefore, may
+  refer to time points that are not guaranteed to be monotonic.
+
+  In this paper, we investigate the specification of temporal
+  properties of distributed systems with resettable skewed clocks. In
+  order to take into account the synchronization of clocks, the local
+  temporal operators are interpreted over resettable skewed clocks. We
+  extend MTL with metric operators that are more suitable to express
+  bounds over non-monotonic time. We propose a method to check the
+  satisfiability for the proposed logic, which enables also
+  compositional reasoning. We implemented and evaluated the approach
+  on typical properties of real-time systems.
+\end{abstract}
+
+%
+%\input{introduction}
+%\input{related_work}
+%\input{preliminaries}
+%\input{skewedsem}
+%\input{encoding}
+%\input{results}
+%\input{conclusions}
+
+\bibliography{biblio} 
+\bibliographystyle{abbrv}
+
+\newpage
+\appendix
+\input{proofs}
+
+
+\end{document}
